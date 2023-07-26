@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(description_bauda_akm)
+project(description_bauda_mec)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
