@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="bauda_mec">
 
-    <xacro:include filename="$(find description_bauda_akm)/description/base.urdf.xacro" />    
+    <xacro:include filename="$(find description_bauda_mec)/description/base.urdf.xacro" />    
+    <xacro:include filename="$(find description_bauda_mec)/description/gazebo_control.xacro"/>
 
 </robot>
