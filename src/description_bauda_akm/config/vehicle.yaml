@@ -1,8 +1,8 @@
 # x, y, z uses as origin the point in the chassis with min x, min z and half y.
 base:
   mass:
-  width:
   length:
+  width:
   height:
 
 wheel:

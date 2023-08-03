@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(description_bauda_akm)
+project(bauda_gazebo)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -33,7 +33,7 @@ if(BUILD_TESTING)
 endif()
 
 install(
-  DIRECTORY description config
+  DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
 
