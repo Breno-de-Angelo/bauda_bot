@@ -1,0 +1,22 @@
+# x, y, z uses as origin the point in the chassis with min x, min z and half y.
+base:
+  mass:
+  width:
+  length:
+  height:
+
+wheel:
+  mass:
+  radius:
+  width:
+  ygap:
+  rear_xoff:
+  front_xoff:
+
+steering:
+  limit_angle:
+
+# camera:
+#   x:
+#   y:
+#   z:
