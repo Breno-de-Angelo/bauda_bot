@@ -24,7 +24,7 @@
     <!-- BASE LINK -->
     <link name="base_link" />
 
-    <!-- BASE_FOOTPRINT LINK -->
+    <!-- BASE_FOOTPRINT -->
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
@@ -32,7 +32,7 @@
     </joint>
     <link name="base_footprint" />
 
-    <!-- CHASSIS LINK -->
+    <!-- CHASSIS -->
     <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis"/>
@@ -60,7 +60,7 @@
         <material>Gazebo/White</material>
     </gazebo>
 
-    <!-- REAR LEFT WHEEL LINK -->
+    <!-- REAR LEFT WHEEL -->
     <joint name="rear_left_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="rear_left_wheel"/>
@@ -87,7 +87,7 @@
         <material>Gazebo/Blue</material>
     </gazebo>
 
-    <!-- REAR RIGHT WHEEL LINK -->
+    <!-- REAR RIGHT WHEEL -->
     <joint name="rear_right_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="rear_right_wheel"/>
@@ -115,7 +115,7 @@
     </gazebo>
 
     <!-- LEFT STEERING -->
-    <joint name="left_steering" type="revolute">
+    <joint name="left_steering_joint" type="revolute">
         <parent link="base_link"/>
         <child link="left_steering_link"/>
         <origin xyz="${wheel_distance_between_axes} ${base_width / 2 + wheel_width / 2 + wheel_ygap} 0" rpy="0 0 0"/>
@@ -123,10 +123,28 @@
         <limit lower="${-steering_limit_angle}" upper="${steering_limit_angle}"
                 effort="${steering_limit_effort}" velocity="${steering_limit_velocity}"/>
     </joint>
-    <link name="left_steering_link" />
+    <link name="left_steering_link">
+        <!-- <visual>
+            <geometry>
+                <cylinder radius="0.001" length="0.001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.001" length="0.001"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.001" length="0.001" radius="0.001">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder> -->
+    </link>
+    <!-- <gazebo reference="rear_right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo> -->
 
     <!-- RIGHT STEERING -->
-    <joint name="right_steering" type="revolute">
+    <joint name="right_steering_joint" type="revolute">
         <parent link="base_link"/>
         <child link="right_steering_link"/>
         <origin xyz="${wheel_distance_between_axes} ${-base_width / 2 - wheel_width / 2 - wheel_ygap} 0" rpy="0 0 0"/>
@@ -134,9 +152,27 @@
         <limit lower="${-steering_limit_angle}" upper="${steering_limit_angle}"
                 effort="${steering_limit_effort}" velocity="${steering_limit_velocity}"/>
     </joint>
-    <link name="right_steering_link" />
+    <link name="right_steering_link">
+        <!-- <visual>
+            <geometry>
+                <cylinder radius="0.001" length="0.001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.001" length="0.001"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.001" length="0.001" radius="0.001">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder> -->
+    </link>
+    <!-- <gazebo reference="rear_right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo> -->
 
-    <!-- FRONT LEFT WHEEL LINK -->
+    <!-- FRONT LEFT WHEEL -->
     <joint name="front_left_wheel_joint" type="continuous">
         <parent link="left_steering_link"/>
         <child link="front_left_wheel"/>
@@ -163,7 +199,7 @@
         <material>Gazebo/Blue</material>
     </gazebo>
 
-    <!-- FRONT RIGHT WHEEL LINK -->
+    <!-- FRONT RIGHT WHEEL -->
     <joint name="front_right_wheel_joint" type="continuous">
         <parent link="right_steering_link"/>
         <child link="front_right_wheel"/>
@@ -189,5 +225,32 @@
     <gazebo reference="front_right_wheel">
         <material>Gazebo/Blue</material>
     </gazebo>
+
+    <!-- STEERING WHEEL -->
+    <joint name="steering_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="steering_wheel"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    <link name="steering_wheel">
+        <!-- <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder> -->
+    </link>
+    <!-- <gazebo reference="front_right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo> -->
 
  </robot>

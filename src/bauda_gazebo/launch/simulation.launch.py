@@ -13,7 +13,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    package_name='description_bauda_akm'
+    package_name='bauda_gazebo'
 
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -21,7 +21,19 @@ def generate_launch_description():
                 )]), launch_arguments={'use_sim_time': 'true'}.items()
     )
 
+    gazebo = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
+             )
+
+    spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
+                        arguments=['-topic', 'robot_description',
+                                   '-entity', 'my_bot'],
+                        output='screen')
+
     # Launch them all!
     return LaunchDescription([
         rsp,
+        gazebo,
+        spawn_entity
     ])
