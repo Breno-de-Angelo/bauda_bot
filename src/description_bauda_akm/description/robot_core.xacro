@@ -6,17 +6,20 @@
 
     <!-- Define robot constants https://navigation.ros.org/setup_guides/urdf/setup_urdf.html -->
     <xacro:property name="yaml_file" value="$(find description_bauda_akm)/config/vehicle.yaml" />
-    <xacro:property name="dict" value="${load_yaml(yaml_file)}"/> 
-    <xacro:property name="base_mass" value="${dict['base'][mass]}" /> 
-    <xacro:property name="base_length" value="${dict['base'][length]}" /> 
-    <xacro:property name="base_width" value="${dict['base'][width]}" /> 
-    <xacro:property name="base_height" value="${dict['base'][height]}" /> 
-    <xacro:property name="wheel_mass" value="${dict['wheel'][mass]}" /> 
-    <xacro:property name="wheel_radius" value="${dict['wheel'][radius]}" /> 
-    <xacro:property name="wheel_width" value="${dict['wheel'][width]}" /> 
-    <xacro:property name="wheel_ygap" value="${dict['wheel'][ygap]}" /> 
-    <xacro:property name="wheel_rear_xoff" value="${dict['wheel'][rear_xoff]}" /> 
-    <xacro:property name="wheel_front_xoff" value="${dict['wheel'][front_xoff]}" /> 
+    <xacro:property name="vehicle_dict" value="${load_yaml(yaml_file)}"/> 
+    <xacro:property name="base_mass" value="${vehicle_dict['base']['mass']}" /> 
+    <xacro:property name="base_length" value="${vehicle_dict['base']['length']}" /> 
+    <xacro:property name="base_width" value="${vehicle_dict['base']['width']}" /> 
+    <xacro:property name="base_height" value="${vehicle_dict['base']['height']}" /> 
+    <xacro:property name="wheel_mass" value="${vehicle_dict['wheel']['mass']}" /> 
+    <xacro:property name="wheel_radius" value="${vehicle_dict['wheel']['radius']}" /> 
+    <xacro:property name="wheel_width" value="${vehicle_dict['wheel']['width']}" /> 
+    <xacro:property name="wheel_ygap" value="${vehicle_dict['wheel']['ygap']}" /> 
+    <xacro:property name="wheel_rear_xoff" value="${vehicle_dict['wheel']['rear_xoff']}" /> 
+    <xacro:property name="wheel_distance_between_axes" value="${vehicle_dict['wheel']['distance_between_axes']}" /> 
+    <xacro:property name="steering_limit_angle" value="${vehicle_dict['steering']['limit_angle']}" /> 
+    <xacro:property name="steering_limit_effort" value="${vehicle_dict['steering']['limit_effort']}" /> 
+    <xacro:property name="steering_limit_velocity" value="${vehicle_dict['steering']['limit_velocity']}" /> 
 
     <!-- BASE LINK -->
     <link name="base_link" />
@@ -33,7 +36,7 @@
     <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis"/>
-        <origin xyz="-${wheel_rear_xoff} 0 0"/>
+        <origin xyz="${-wheel_rear_xoff} 0 0"/>
     </joint>
     <link name="chassis">
         <visual>
@@ -57,5 +60,134 @@
         <material>Gazebo/White</material>
     </gazebo>
 
+    <!-- REAR LEFT WHEEL LINK -->
+    <joint name="rear_left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="rear_left_wheel"/>
+        <origin xyz="0 ${base_width / 2 + wheel_width / 2 + wheel_ygap} 0" rpy="-${pi/2} 0 0" />
+        <axis xyz="0 0 1"/>
+    </joint>
+    <link name="rear_left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+    <gazebo reference="rear_left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
 
-</robot>
+    <!-- REAR RIGHT WHEEL LINK -->
+    <joint name="rear_right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="rear_right_wheel"/>
+        <origin xyz="0 ${-base_width / 2 - wheel_width / 2 - wheel_ygap} 0" rpy="${-pi/2} 0 0" />
+        <axis xyz="0 0 1"/>
+    </joint>
+    <link name="rear_right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+    <gazebo reference="rear_right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <!-- LEFT STEERING -->
+    <joint name="left_steering" type="revolute">
+        <parent link="base_link"/>
+        <child link="left_steering_link"/>
+        <origin xyz="${wheel_distance_between_axes} ${base_width / 2 + wheel_width / 2 + wheel_ygap} 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-steering_limit_angle}" upper="${steering_limit_angle}"
+                effort="${steering_limit_effort}" velocity="${steering_limit_velocity}"/>
+    </joint>
+    <link name="left_steering_link" />
+
+    <!-- RIGHT STEERING -->
+    <joint name="right_steering" type="revolute">
+        <parent link="base_link"/>
+        <child link="right_steering_link"/>
+        <origin xyz="${wheel_distance_between_axes} ${-base_width / 2 - wheel_width / 2 - wheel_ygap} 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-steering_limit_angle}" upper="${steering_limit_angle}"
+                effort="${steering_limit_effort}" velocity="${steering_limit_velocity}"/>
+    </joint>
+    <link name="right_steering_link" />
+
+    <!-- FRONT LEFT WHEEL LINK -->
+    <joint name="front_left_wheel_joint" type="continuous">
+        <parent link="left_steering_link"/>
+        <child link="front_left_wheel"/>
+        <origin xyz="0 0 0" rpy="-${pi/2} 0 0" />
+        <axis xyz="0 0 1"/>
+    </joint>
+    <link name="front_left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+    <gazebo reference="front_left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <!-- FRONT RIGHT WHEEL LINK -->
+    <joint name="front_right_wheel_joint" type="continuous">
+        <parent link="right_steering_link"/>
+        <child link="front_right_wheel"/>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+        <axis xyz="0 0 -1"/>
+    </joint>
+    <link name="front_right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+    <gazebo reference="front_right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+ </robot>
