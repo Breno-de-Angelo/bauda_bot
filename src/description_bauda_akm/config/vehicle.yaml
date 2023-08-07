@@ -8,9 +8,9 @@ wheel:
   mass: 0.05
   radius: 0.05
   width: 0.01
-  ygap: 0.005
+  ygap: 0.05
   rear_xoff: 0.05
-  distance_between_axes: 0.25
+  distance_between_axes: 0.2
 
 steering:
   limit_angle: 0.3

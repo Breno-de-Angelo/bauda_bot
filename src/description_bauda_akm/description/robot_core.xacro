@@ -124,6 +124,11 @@
                 effort="${steering_limit_effort}" velocity="${steering_limit_velocity}"/>
     </joint>
     <link name="left_steering_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.02"/>
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+        </inertial>        
         <!-- <visual>
             <geometry>
                 <cylinder radius="0.001" length="0.001"/>
@@ -153,6 +158,11 @@
                 effort="${steering_limit_effort}" velocity="${steering_limit_velocity}"/>
     </joint>
     <link name="right_steering_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.02"/>
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+        </inertial>  
         <!-- <visual>
             <geometry>
                 <cylinder radius="0.001" length="0.001"/>
@@ -230,11 +240,11 @@
     <joint name="steering_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="steering_wheel"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="${wheel_distance_between_axes} 0 ${base_height + 2 * wheel_radius}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
     </joint>
     <link name="steering_wheel">
-        <!-- <visual>
+        <visual>
             <geometry>
                 <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
             </geometry>
@@ -247,10 +257,10 @@
         </collision>
         <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
             <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_cylinder> -->
+        </xacro:inertial_cylinder>
     </link>
-    <!-- <gazebo reference="front_right_wheel">
+    <gazebo reference="steering_wheel">
         <material>Gazebo/Blue</material>
-    </gazebo> -->
+    </gazebo>
 
  </robot>
