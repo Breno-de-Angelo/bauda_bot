@@ -6,7 +6,7 @@
 
     <!-- Define robot constants https://navigation.ros.org/setup_guides/urdf/setup_urdf.html -->
     <xacro:property name="yaml_file" value="$(find description_bauda_akm)/config/vehicle.yaml" />
-    <xacro:property name="vehicle_dict" value="${load_yaml(yaml_file)}"/> 
+    <xacro:property name="vehicle_dict" value="${xacro.load_yaml(yaml_file)}"/> 
     <xacro:property name="base_mass" value="${vehicle_dict['base']['mass']}" /> 
     <xacro:property name="base_length" value="${vehicle_dict['base']['length']}" /> 
     <xacro:property name="base_width" value="${vehicle_dict['base']['width']}" /> 
@@ -183,11 +183,10 @@
     </gazebo> -->
 
     <!-- FRONT LEFT WHEEL -->
-    <joint name="front_left_wheel_joint" type="continuous">
+    <joint name="front_left_wheel_joint" type="fixed">
         <parent link="left_steering_link"/>
         <child link="front_left_wheel"/>
         <origin xyz="0 0 0" rpy="-${pi/2} 0 0" />
-        <axis xyz="0 0 1"/>
     </joint>
     <link name="front_left_wheel">
         <visual>
@@ -210,11 +209,10 @@
     </gazebo>
 
     <!-- FRONT RIGHT WHEEL -->
-    <joint name="front_right_wheel_joint" type="continuous">
+    <joint name="front_right_wheel_joint" type="fixed">
         <parent link="right_steering_link"/>
         <child link="front_right_wheel"/>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
-        <axis xyz="0 0 -1"/>
     </joint>
     <link name="front_right_wheel">
         <visual>
@@ -236,7 +234,7 @@
         <material>Gazebo/Blue</material>
     </gazebo>
 
-    <!-- STEERING WHEEL -->
+    <!-- STEERING WHEEL
     <joint name="steering_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="steering_wheel"/>
@@ -261,6 +259,6 @@
     </link>
     <gazebo reference="steering_wheel">
         <material>Gazebo/Blue</material>
-    </gazebo>
+    </gazebo> -->
 
  </robot>

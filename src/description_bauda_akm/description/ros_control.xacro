@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- <xacro:property name="steering_limit_angle" value="${vehicle_dict['steering']['limit_angle']}" />  -->
+<!-- 
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros_control/GazeboSystem</plugin>
+        </hardware>
+        <joint name="rear_left_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="velocity"/>
+        </joint>        
+        <joint name="rear_right_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="front_left_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="front_right_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="left_steering_joint">
+            <command_interface name="position">
+                <param name="min">${-steering_limit_angle}</param>
+                <param name="max">${steering_limit_angle}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+        <joint name="right_steering_joint">
+            <command_interface name="position">
+                <param name="min">${-steering_limit_angle}</param>
+                <param name="max">${steering_limit_angle}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+        <joint name="steering_wheel_joint">
+            <command_interface name="position">
+                <param name="min">${-steering_limit_angle}</param>
+                <param name="max">${steering_limit_angle}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+    </ros2_control> -->
+
+    <transmission name="rear_left_wheel_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="rear_left_wheel_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="rear_left_wheel_actuator">
+            <mechanicalReduction>1.0</mechanicalReduction>
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <transmission name="rear_right_wheel_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="rear_right_wheel_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="rear_right_wheel_actuator">
+            <mechanicalReduction>1.0</mechanicalReduction>
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+    
+    <transmission name="left_steering_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="left_steering_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="left_steering_actuator">
+            <mechanicalReduction>1.0</mechanicalReduction>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <transmission name="right_steering_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="right_steering_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="right_steering_actuator">
+            <mechanicalReduction>1.0</mechanicalReduction>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <!-- <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType> -->
+        </plugin>
+    </gazebo>
+
+</robot>

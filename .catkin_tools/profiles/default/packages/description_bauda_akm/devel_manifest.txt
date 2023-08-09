@@ -1,0 +1,5 @@
+description_bauda_akm
+/home/breno/bauda_bot/devel/.private/description_bauda_akm/cmake.lock /home/breno/bauda_bot/devel/./cmake.lock
+/home/breno/bauda_bot/devel/.private/description_bauda_akm/lib/pkgconfig/description_bauda_akm.pc /home/breno/bauda_bot/devel/lib/pkgconfig/description_bauda_akm.pc
+/home/breno/bauda_bot/devel/.private/description_bauda_akm/share/description_bauda_akm/cmake/description_bauda_akmConfig-version.cmake /home/breno/bauda_bot/devel/share/description_bauda_akm/cmake/description_bauda_akmConfig-version.cmake
+/home/breno/bauda_bot/devel/.private/description_bauda_akm/share/description_bauda_akm/cmake/description_bauda_akmConfig.cmake /home/breno/bauda_bot/devel/share/description_bauda_akm/cmake/description_bauda_akmConfig.cmake

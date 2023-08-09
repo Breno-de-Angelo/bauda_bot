@@ -1,3 +1,9 @@
+<launch>
+    <arg name="use_sim_time" default="true"/>
+    <param name="robot_description" command="xacro $(find description_bauda_akm)/description/robot.urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rsp" />
+</launch>
+<!-- 
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -38,4 +44,4 @@ def generate_launch_description():
             description='Use sim time if true'),
 
         node_robot_state_publisher
-    ])
+    ]) -->

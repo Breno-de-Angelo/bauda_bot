@@ -1,0 +1,5 @@
+bauda_gazebo
+/home/breno/bauda_bot/devel/.private/bauda_gazebo/cmake.lock /home/breno/bauda_bot/devel/./cmake.lock
+/home/breno/bauda_bot/devel/.private/bauda_gazebo/lib/pkgconfig/bauda_gazebo.pc /home/breno/bauda_bot/devel/lib/pkgconfig/bauda_gazebo.pc
+/home/breno/bauda_bot/devel/.private/bauda_gazebo/share/bauda_gazebo/cmake/bauda_gazeboConfig.cmake /home/breno/bauda_bot/devel/share/bauda_gazebo/cmake/bauda_gazeboConfig.cmake
+/home/breno/bauda_bot/devel/.private/bauda_gazebo/share/bauda_gazebo/cmake/bauda_gazeboConfig-version.cmake /home/breno/bauda_bot/devel/share/bauda_gazebo/cmake/bauda_gazeboConfig-version.cmake

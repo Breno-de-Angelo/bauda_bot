@@ -1,0 +1,26 @@
+<launch>
+    
+    <include file="$(find bauda_gazebo)/launch/rsp.launch" />
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="true" />
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+    </include>
+    
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+     args="-urdf -model my_bot -param robot_description"/>
+    
+    <rosparam file="$(find description_bauda_akm)/config/controllers.yaml" command="load" />
+    <!-- <rosparam file="$(find description_bauda_akm)/config/pid.yaml" command="load" /> -->
+    
+    <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="mobile_base_controller" />
+    
+    <!-- <node name="rviz" type="rviz" pkg="rviz"
+    args="-d $(find description_bauda_akm)/config/view_bot.rviz" required="true" /> -->
+    
+    <!-- <node name="joint_state_publisher_gui" type="joint_state_publisher_gui"
+     pkg="joint_state_publisher_gui" /> -->
+     
+</launch>
