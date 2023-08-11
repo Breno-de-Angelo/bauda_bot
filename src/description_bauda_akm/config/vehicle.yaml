@@ -17,7 +17,12 @@ steering:
   limit_effort: 100
   limit_velocity: 100
 
-# camera:
-#   x:
-#   y:
-#   z:
+camera:
+  x: 0.305
+  y: 0.0
+  z: 0.08
+
+lidar:
+  x: 0.2
+  y: 0.0
+  z: 0.15

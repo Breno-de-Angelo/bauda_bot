@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="bauda_diff">
 
-    <joint name="laser_joit" type="fixed">
+    <xacro:property name="yaml_file" value="$(find description_bauda_akm)/config/vehicle.yaml" />
+    <xacro:property name="vehicle_dict" value="${xacro.load_yaml(yaml_file)}"/> 
+    <xacro:property name="lidar_x" value="${vehicle_dict['lidar']['x']}" /> 
+    <xacro:property name="lidar_y" value="${vehicle_dict['lidar']['y']}" /> 
+    <xacro:property name="lidar_z" value="${vehicle_dict['lidar']['z']}" /> 
+
+    <joint name="laser_joint" type="fixed">
         <parent link="chassis"/>
         <child link="laser_frame"/>
-        <origin xyz="0.1 0 0.175" rpy="0 0 0"/>
+        <origin xyz="${lidar_x} ${lidar_y} ${lidar_z}" rpy="0 0 0"/>
     </joint>
 
     <link name="laser_frame">
@@ -26,10 +32,9 @@
 
    <gazebo reference="laser_frame">
         <material>Gazebo/Red</material>
-
         <sensor name="laser" type="ray">
             <pose> 0 0 0 0 0 0 </pose>
-            <visualize>false</visualize>
+            <visualize>true</visualize>
             <update_rate>10</update_rate>
             <ray>
                 <scan>

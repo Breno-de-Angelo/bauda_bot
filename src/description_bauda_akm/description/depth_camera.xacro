@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="bauda_diff">
 
-    <joint name="camera_joit" type="fixed">
+    <xacro:property name="yaml_file" value="$(find description_bauda_akm)/config/vehicle.yaml" />
+    <xacro:property name="vehicle_dict" value="${xacro.load_yaml(yaml_file)}"/> 
+    <xacro:property name="camera_x" value="${vehicle_dict['camera']['x']}" /> 
+    <xacro:property name="camera_y" value="${vehicle_dict['camera']['y']}" /> 
+    <xacro:property name="camera_z" value="${vehicle_dict['camera']['z']}" /> 
+
+    <joint name="camera_joint" type="fixed">
         <parent link="chassis"/>
         <child link="camera_link"/>
-        <origin xyz="0.305 0 0.08" rpy="0 0 0"/>
+        <origin xyz="${camera_x} ${camera_y} ${camera_z}" rpy="0 0 0"/>
     </joint>
 
     <link name="camera_link">
@@ -24,12 +30,11 @@
 
     <link name="camera_link_optical"/>
       
-   <gazebo reference="camera_link">
+    <gazebo reference="camera_link">
         <material>Gazebo/Red</material>
-
         <sensor name="camera" type="depth">
             <pose> 0 0 0 0 0 0 </pose>
-            <visualize>false</visualize>
+            <visualize>true</visualize>
             <update_rate>10</update_rate>
             <camera>
                 <horizontal_fov>1.089</horizontal_fov>
@@ -43,7 +48,7 @@
                     <far>8.0</far>
                 </clip>
             </camera>
-            <plugin name="laser_controller" filename="libgazebo_ros_camera.so">
+            <plugin name="depth_camera_controller" filename="libgazebo_ros_camera.so">
                 <frame_name>camera_link_optical</frame_name>
                 <min_depth>0.1</min_depth>
                 <max_depth>100.0</max_depth>
