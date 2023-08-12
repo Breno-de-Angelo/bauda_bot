@@ -1,26 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-    <xacro:include filename="inertials.xacro"/>
-    <xacro:include filename="materials.xacro"/>
-
-    <!-- Define robot constants https://navigation.ros.org/setup_guides/urdf/setup_urdf.html -->
-    <xacro:property name="yaml_file" value="$(find description_bauda_akm)/config/vehicle.yaml" />
-    <xacro:property name="vehicle_dict" value="${xacro.load_yaml(yaml_file)}"/> 
-    <xacro:property name="base_mass" value="${vehicle_dict['base']['mass']}" /> 
-    <xacro:property name="base_length" value="${vehicle_dict['base']['length']}" /> 
-    <xacro:property name="base_width" value="${vehicle_dict['base']['width']}" /> 
-    <xacro:property name="base_height" value="${vehicle_dict['base']['height']}" /> 
-    <xacro:property name="wheel_mass" value="${vehicle_dict['wheel']['mass']}" /> 
-    <xacro:property name="wheel_radius" value="${vehicle_dict['wheel']['radius']}" /> 
-    <xacro:property name="wheel_width" value="${vehicle_dict['wheel']['width']}" /> 
-    <xacro:property name="wheel_ygap" value="${vehicle_dict['wheel']['ygap']}" /> 
-    <xacro:property name="wheel_rear_xoff" value="${vehicle_dict['wheel']['rear_xoff']}" /> 
-    <xacro:property name="wheel_distance_between_axes" value="${vehicle_dict['wheel']['distance_between_axes']}" /> 
-    <xacro:property name="steering_limit_angle" value="${vehicle_dict['steering']['limit_angle']}" /> 
-    <xacro:property name="steering_limit_effort" value="${vehicle_dict['steering']['limit_effort']}" /> 
-    <xacro:property name="steering_limit_velocity" value="${vehicle_dict['steering']['limit_velocity']}" /> 
-
     <!-- BASE LINK -->
     <link name="base_link" />
 

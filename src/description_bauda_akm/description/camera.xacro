@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="bauda_diff">
 
-    <xacro:property name="yaml_file" value="$(find description_bauda_akm)/config/vehicle.yaml" />
-    <xacro:property name="vehicle_dict" value="${xacro.load_yaml(yaml_file)}"/> 
-    <xacro:property name="camera_x" value="${vehicle_dict['camera']['x']}" /> 
-    <xacro:property name="camera_y" value="${vehicle_dict['camera']['y']}" /> 
-    <xacro:property name="camera_z" value="${vehicle_dict['camera']['z']}" /> 
-
     <joint name="camera_joint" type="fixed">
         <parent link="chassis"/>
         <child link="camera_link"/>
@@ -30,7 +24,7 @@
 
     <link name="camera_link_optical"/>
       
-   <gazebo reference="camera_link">
+    <gazebo reference="camera_link">
         <material>Gazebo/Red</material>
         <sensor name="camera" type="camera">
             <pose> 0 0 0 0 0 0 </pose>

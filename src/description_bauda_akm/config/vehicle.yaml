@@ -22,7 +22,14 @@ camera:
   y: 0.0
   z: 0.08
 
+
+# frequency: 10 Hz
+# samples: VLP = 440, HDL = 220
 lidar:
   x: 0.2
   y: 0.0
   z: 0.15
+  organize_cloud: false
+  frequency: 10
+  samples: 440
+  gpu: true

@@ -6,6 +6,9 @@ controller_manager:
     akm_cont:
       type: ackermann_steering_controller/AckermannSteeringController
 
+    # lidar_joint_controller:
+    #   type: velocity_controllers/JointGroupVelocityController
+
     joint_broad:
       type: joint_state_broadcaster/JointStateBroadcaster
 
@@ -25,3 +28,9 @@ akm_cont:
     rear_wheel_track: 0.41
     front_wheels_radius: 0.05
     rear_wheels_radius: 0.05
+
+
+# lidar_joint_controller:
+#   ros__parameters:
+#     joints:
+#       - lidar_joint
