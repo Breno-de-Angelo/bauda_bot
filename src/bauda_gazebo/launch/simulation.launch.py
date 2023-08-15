@@ -40,6 +40,21 @@ def generate_launch_description():
     #         on_completion=[spawn_entity]
     #     )
     # )
+
+    joystick = Node(
+        package='joy',
+        executable='joy_node'
+    )
+
+    teleop_config = os.path.join(
+        get_package_share_directory('ackermann_teleop_twist_joy'), 'config', 'xbox.config.yaml')
+    
+    teleop_joy = Node(
+        package='ackermann_teleop_twist_joy',
+        executable='teleop_node',
+        parameters=[teleop_config],
+        remappings=[('/cmd_vel', '/akm_cont/reference_unstamped')]
+    )
     
     drive_spawner = Node(
         package="controller_manager",
@@ -64,6 +79,8 @@ def generate_launch_description():
         rsp,
         gazebo,
         spawn_entity,
+        joystick,
+        teleop_joy,
         drive_spawner,
         joint_broad_spawner,
     ])

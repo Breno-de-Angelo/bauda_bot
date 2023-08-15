@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="bauda_diff">
 
-    <joint name="laser_joint" type="fixed">
+    <joint name="laser_base_joint" type="fixed">
         <parent link="chassis"/>
-        <child link="laser_frame"/>
+        <child link="lidar_base"/>
         <origin xyz="${lidar_x} ${lidar_y} ${lidar_z}" rpy="0 0 0"/>
     </joint>
 
-    <link name="laser_frame">
+    <link name="lidar_base">
         <visual>
             <geometry>
                 <cylinder radius="0.05" length="0.04"/>
@@ -23,6 +23,15 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
+
+    <joint name="laser_frame_joint" type="fixed">
+        <parent link="lidar_base" />
+        <child link="laser_frame" />
+        <origin xyz="0 0 0.005" rpy="0 0 0"/>
+    </joint>
+
+    <link name="laser_frame">
+    </link> 
 
    <gazebo reference="laser_frame">
         <material>Gazebo/Red</material>

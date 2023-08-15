@@ -23,7 +23,7 @@
     <xacro:property name="camera_x" value="${vehicle_dict['camera']['x']}" /> 
     <xacro:property name="camera_y" value="${vehicle_dict['camera']['y']}" /> 
     <xacro:property name="camera_z" value="${vehicle_dict['camera']['z']}" />
-    <xacro:property name="lidar_x" value="${vehicle_dict['camera']['x']}" />
+    <xacro:property name="lidar_x" value="${vehicle_dict['lidar']['x']}" />
     <xacro:property name="lidar_y" value="${vehicle_dict['lidar']['y']}" />
     <xacro:property name="lidar_z" value="${vehicle_dict['lidar']['z']}" />
     <xacro:property name="lidar_organize_cloud" value="${vehicle_dict['lidar']['organize_cloud']}" />
@@ -40,8 +40,8 @@
     <!-- <xacro:include filename="depth_camera.xacro" /> -->
     <xacro:include filename="camera.xacro" />
 
-    <!-- <xacro:include filename="2D_lidar.xacro" /> -->
+    <xacro:include filename="2D_lidar.xacro" />
     <!-- <xacro:include filename="VLP-16.urdf.xacro" /> -->
-    <xacro:include filename="HDL-32E.urdf.xacro" />
+    <!-- <xacro:include filename="HDL-32E.urdf.xacro" /> -->
 
 </robot>
