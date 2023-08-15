@@ -55,7 +55,8 @@ struct AckermannTeleopTwistJoy::Impl
   void sendCmdVelMsg(const sensor_msgs::msg::Joy::SharedPtr, const std::string& which_map);
 
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_unstamped;
+  rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_pub_stamped;
 
   bool stamped_cmd_vel;
   bool require_enable_button;
@@ -85,9 +86,9 @@ AckermannTeleopTwistJoy::AckermannTeleopTwistJoy(const rclcpp::NodeOptions& opti
   pimpl_->stamped_cmd_vel = this->declare_parameter("stamped_cmd_vel", true);
   
   if (pimpl_->stamped_cmd_vel)
-    pimpl_->cmd_vel_pub = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
+    pimpl_->cmd_vel_pub_stamped = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
   else
-    pimpl_->cmd_vel_pub = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+    pimpl_->cmd_vel_pub_unstamped = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
 
   pimpl_->require_enable_button = this->declare_parameter("require_enable_button", true);
 
@@ -271,10 +272,12 @@ void AckermannTeleopTwistJoy::Impl::sendCmdVelMsg(const sensor_msgs::msg::Joy::S
   cmd_vel_msg->linear.x = velocity;
   cmd_vel_msg->angular.z = velocity * std::tan(angle) / this->wheelbase;
 
-  if (!this->stamped_cmd_vel)
+  if (this->stamped_cmd_vel)
+  {
     cmd_vel_msg->header.stamp = rclcpp::Time::now();
-
-  cmd_vel_pub->publish(std::move(cmd_vel_msg));
+    cmd_vel_pub_stamped->publish(std::move(cmd_vel_msg));
+  }
+  cmd_vel_pub_unstamped->publish(std::move(cmd_vel_msg));
   sent_disable_msg = false;
 }
 
@@ -300,7 +303,12 @@ void AckermannTeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::Sha
     {
       // Initializes with zeros by default.
       auto cmd_vel_msg = std::make_unique<geometry_msgs::msg::Twist>();
-      cmd_vel_pub->publish(std::move(cmd_vel_msg));
+      if (this->stamped_cmd_vel)
+      {
+	cmd_vel_msg->header.stamp = rclcpp::Time::now();
+	cmd_vel_pub->publish(std::move(cmd_vel_msg));
+      }
+      cmd_vel_pub_unstamped->publish(std::move(cmd_vel_msg));
       sent_disable_msg = true;
     }
   }
